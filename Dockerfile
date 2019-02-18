@@ -20,4 +20,4 @@ USER jenkins
 
 WORKDIR /var/www/site
 
-CMD /bin/s
+CMD /bin/sh
