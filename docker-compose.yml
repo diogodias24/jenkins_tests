@@ -6,6 +6,5 @@ services:
             context: ./
             dockerfile: Dockerfile
         container_name: jenkins_test
-        
         stdin_open: true
         tty: true
