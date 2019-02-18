@@ -1,0 +1,24 @@
+FROM ubuntu:bionic
+LABEL Diogo Dias saidogoid2@gmail.com
+
+RUN apt-get update && apt-get upgrade -y \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && apt-get install -y \
+    nano \
+    wget \
+    php \ 
+    && wget https://getcomposer.org/installer -P /tmp/ \
+    && cd /tmp && php installer && mv composer.phar /usr/local/bin/composer \
+    && useradd -ms /bin/bash jenkins && echo "jenkins:jenkins" | chpasswd && adduser jenkins sudo \
+    && usermod -a -G www-data jenkins \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers 
+
+USER jenkins
+
+#WORKDIR /var/www/site
+
+WORKDIR /
+
+EXPOSE 80
+
+CMD /bin/bash

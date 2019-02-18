@@ -1,11 +1,20 @@
-FROM diogodias2/bionic-apache_php7x
+FROM alpine:3.9
 
-USER root  
+LABEL Diogo Dias <saidogoid2@gmail.com>
 
-RUN useradd -ms /bin/bash jenkins && echo "jenkins:jenkins" | chpasswd && adduser jenkins sudo \
-    && sudo usermod -a -G www-data jenkins 
-#	&& echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+ENV \
+    # When using Composer, disable the warning about running commands as root/super user
+    COMPOSER_ALLOW_SUPERUSER=1 \
+    DEPENDENCIES="vim composer php"
+
+RUN set -x \
+    && apk add --no-cache $DEPENDENCIES \
+    && adduser -S jenkins \
+    && mkdir -p /var/www/site
+
 
 USER jenkins
 
 WORKDIR /var/www/site
+
+CMD /bin/sh

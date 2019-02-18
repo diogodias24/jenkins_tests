@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+    sample_container:
+        build: 
+            context: ./
+            dockerfile: Dockerfile
+        container_name: jenkins_test
+        
+        stdin_open: true
+        tty: true
