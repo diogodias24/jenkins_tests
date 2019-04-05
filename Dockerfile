@@ -11,10 +11,11 @@ ENV \
 
 RUN set -x \
     && apk add --no-cache $DEPENDENCIES \
-    && adduser -S jenkins \
+    && adduser -u 111 -S jenkins \
+    && addgroup -g 115 -S jenkins \
     && mkdir -p $WEBSITE_PATH \
     && chmod u=rwx,g=rwx $WEBSITE_PATH \
-    && chown -R jenkins:root $WEBSITE_PATH
+    && chown -R jenkins:jenkins $WEBSITE_PATH
 
 #COPY php.ini /etc/php7/php.ini
 
